@@ -28,10 +28,6 @@ class NotesController extends Controller
         return response()->json([
             'status' => 'success',
             'data' => $notes,
-            'time' => $time[0],
-            'start' => $dateStart,
-            'end' => $dateEnd,
-            'temp' => $temp,
         ], Response::HTTP_OK);
     }
 
@@ -138,6 +134,7 @@ class NotesController extends Controller
             $result['score'] += 1;
         }
         $result['points'] = $result['score'] * 10;
+        $result['activities_category'] = $result['score'] > 10 ? 'fit' : 'less fit';
 
         return response()->json([
             'status' => 'success',
