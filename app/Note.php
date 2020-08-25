@@ -20,5 +20,6 @@ class Note extends Model
         'soto' => 312,
         'telur' => 72,
         'telor' => 72,
+        'nasi goreng' => 333,
     ];
 }
