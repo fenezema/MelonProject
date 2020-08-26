@@ -18,6 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/v1/users/{id}/points', 'UserController@getPoints');
+
 Route::get('/v1/users/{id}/notes', 'NotesController@list');
 Route::get('/v1/users/{id}/result', 'NotesController@result');
 Route::post('/v1/users/{id}/notes', 'NotesController@create');

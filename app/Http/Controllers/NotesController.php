@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Note;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Http;
 
@@ -136,6 +138,14 @@ class NotesController extends Controller
         $result['points'] = $result['score'] * 10;
         $result['activities_category'] = $result['score'] > 10 ? 'fit' : 'less fit';
 
+        $res = Cache::get("user:date:{$id}");
+        if ($res !== $time[0]) {
+            $user = User::where('id', $id)->first();
+            $user->update([
+                'points' => $user->points + $result['points'],
+            ]);
+            Cache::forever("user:date:{$id}", $time[0]);
+        }
         return response()->json([
             'status' => 'success',
             'data' => $result,
